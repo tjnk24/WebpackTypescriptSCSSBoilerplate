@@ -1,3 +1,7 @@
 import './style.css';
 
-console.log('ку');
+const testFunc = (stringParam: string): void => {
+  console.log(stringParam);
+};
+
+testFunc('ку');
