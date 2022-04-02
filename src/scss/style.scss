@@ -1,7 +1,7 @@
 $test-color: #0ff;
 
 .test {
-        color: $test-color;
+    color: $test-color;
 
     &__nested {
         color: #ccc !important;

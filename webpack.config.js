@@ -9,12 +9,16 @@ const development = process.env.NODE_ENV !== 'production';
 module.exports = {
     entry: './src/index.ts',
     output: {
-        filename: '[name].[hash].js',
+        filename: '[name].[fullhash].js',
         path: path.resolve(__dirname, 'build'),
+        clean: true,
     },
     devServer: {
         port: 8080,
         static: path.resolve(__dirname, 'src'),
+        devMiddleware: {
+            writeToDisk: true,
+        },
     },
     mode: development ? 'development' : 'production',
     module: {
@@ -33,6 +37,20 @@ module.exports = {
                     'css-loader',
                     'sass-loader',
                 ],
+            },
+            {
+                test: /\.(jpe?g|png|gif)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[name][ext]',
+                },
+            },
+            {
+                test: /\.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]',
+                },
             },
         ],
     },
