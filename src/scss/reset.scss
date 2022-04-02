@@ -1,3 +1,24 @@
+@font-face {
+    font-family: 'Raleway-Bold';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Raleway-Bold'), local('Raleway-Bold'), url(../fonts/Raleway-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Lato Bold';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Lato Bold'), local('Lato-Bold'), url(../fonts/Lato-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Lato Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lato-Regular'), local('Lato-Regular'), url(../fonts/Lato-Regular.ttf);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,7 +26,7 @@
 }
 
 body {
-    font-family: Roboto, sans-serif;
+    font-family: 'Lato Regular', sans-serif;
     font-size: 1rem;
 }
 

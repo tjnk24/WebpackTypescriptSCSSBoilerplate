@@ -6,3 +6,4 @@ Boilerplate with Webpack, TS, SCSS ready
 - SCSS
 - Eslint
 - Stylelint
+- JQuery

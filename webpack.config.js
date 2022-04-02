@@ -7,9 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const development = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    entry: [
-        './src/index.ts',
-    ],
+    entry: './src/index.ts',
     output: {
         filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'build'),
@@ -36,16 +34,6 @@ module.exports = {
                     'sass-loader',
                 ],
             },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    context: path.resolve(__dirname, 'src/'),
-                    // publicPath: development ? undefined : '../',
-                    // name: development ? '[name].[ext]' : '[path][name].[ext]',
-                    // limit: 1000,
-                },
-            },
         ],
     },
     resolve: {
@@ -54,7 +42,9 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
-            patterns: [{from: 'src/images', to: 'images'}],
+            patterns: [
+                {from: 'src/images', to: 'images'},
+            ],
         }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
