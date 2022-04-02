@@ -1,69 +1,64 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const development = process.env.NODE_ENV !== 'production';
 
-const cssLoaders = [
-  {
-    loader: development ? 'style-loader' : MiniCssExtractPlugin.loader,
-  },
-  {
-    loader: 'css-loader',
-    options: {
-      sourceMap: development,
-    },
-  },
-];
-
 module.exports = {
-  entry: [
-    './src/index.ts',
-  ],
-  output: {
-    filename: '[name].[hash].js',
-    path: path.resolve(__dirname, 'build'),
-    publicPath: '',
-  },
-  watch: true,
-  devServer: {
-    port: 8080,
-    contentBase: path.resolve(__dirname, 'src'),
-  },
-  mode: development ? 'development' : 'production',
-  devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader',
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: cssLoaders,
-      },
+    entry: [
+        './src/index.ts',
     ],
-  },
-  resolve: {
-    extensions: ['.ts', '.js'],
-    alias: {
-      '@components': path.resolve(__dirname, 'src', 'components'),
+    output: {
+        filename: '[name].[hash].js',
+        path: path.resolve(__dirname, 'build'),
     },
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: development ? '[name].css' : '[name].[hash].css',
-      chunkFilename: '[id].css',
-    }),
-  ],
+    devServer: {
+        port: 8080,
+        static: path.resolve(__dirname, 'src'),
+    },
+    mode: development ? 'development' : 'production',
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: [
+                    {loader: 'ts-loader'},
+                ],
+            },
+            {
+                test:/\.scss$/,
+                use: [
+                    {loader: development ? 'style-loader' : MiniCssExtractPlugin.loader},
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'file-loader',
+                options: {
+                    context: path.resolve(__dirname, 'src/'),
+                    // publicPath: development ? undefined : '../',
+                    // name: development ? '[name].[ext]' : '[path][name].[ext]',
+                    // limit: 1000,
+                },
+            },
+        ],
+    },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [{from: 'src/images', to: 'images'}],
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+        }),
+        new MiniCssExtractPlugin(),
+    ],
 };

@@ -1,0 +1,18 @@
+$test-color: #0ff;
+
+.test {
+        color: $test-color;
+
+    &__nested {
+        color: #ccc !important;
+        font-size: 50px;
+    }
+}
+
+.jpegImage {
+    width: 400px;
+}
+
+.svgImage {
+    width: 350px;
+}

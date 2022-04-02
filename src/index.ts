@@ -1,7 +1,7 @@
-import './style.css';
-
-const testFunc = (stringParam: string): void => {
-  console.log(stringParam);
-};
+import './scss';
+import {testFunc} from './scripts/test';
+import {foo} from './scripts/foo';
 
 testFunc('ку');
+
+foo.log('test');
