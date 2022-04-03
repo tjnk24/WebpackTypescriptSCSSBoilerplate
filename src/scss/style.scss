@@ -16,3 +16,9 @@ $test-color: #0ff;
 .svgImage {
     width: 350px;
 }
+
+.testInput {
+    &::placeholder {
+        color: blue;
+    }
+}
