@@ -3,13 +3,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const development = process.env.NODE_ENV !== 'production';
 
 module.exports = {
+    mode: development ? 'development' : 'production',
     entry: './src/index.ts',
     output: {
-        filename: '[name].[fullhash].js',
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].chunk.js',
         path: path.resolve(__dirname, 'build'),
         clean: true,
     },
@@ -21,7 +25,9 @@ module.exports = {
             writeToDisk: true,
         },
     },
-    mode: development ? 'development' : 'production',
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
     module: {
         rules: [
             {
@@ -55,8 +61,14 @@ module.exports = {
             },
         ],
     },
-    resolve: {
-        extensions: ['.ts', '.js'],
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+        minimizer: [
+            new TerserPlugin(),
+            new CssMinimizerWebpackPlugin(),
+        ],
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -68,6 +80,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+        }),
     ],
 };
