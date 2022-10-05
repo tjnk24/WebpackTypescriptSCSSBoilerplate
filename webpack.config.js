@@ -9,21 +9,32 @@ const TerserPlugin = require('terser-webpack-plugin');
 const development = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    mode: development ? 'development' : 'production',
+    context: __dirname,
+    devtool: development && 'source-map',
+    devServer: {
+        static: path.resolve(__dirname, 'src'),
+        liveReload: false,
+        open: true,
+        port: 8080,
+        hot: true,
+        historyApiFallback: true,
+        client: {
+            logging: 'error',
+            overlay: false,
+        },
+        devMiddleware: {
+            writeToDisk: true,
+        },
+    },
+    name: 'client',
+    target: 'web',
     entry: './src/index.ts',
+    mode: development ? 'development' : 'production',
     output: {
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js',
         path: path.resolve(__dirname, 'build'),
         clean: true,
-    },
-    devServer: {
-        port: 8080,
-        static: path.resolve(__dirname, 'src'),
-        open: true,
-        devMiddleware: {
-            writeToDisk: true,
-        },
     },
     resolve: {
         extensions: ['.ts', '.js'],
@@ -31,7 +42,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts$/,
+                test: /\.(js|ts)$/,
                 exclude: /node_modules/,
                 use: [
                     {loader: 'ts-loader'},
@@ -71,14 +82,8 @@ module.exports = {
             },
         ],
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-        },
-        minimizer: [
-            new TerserPlugin(),
-            new CssMinimizerWebpackPlugin(),
-        ],
+    performance: {
+        hints: false,
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -91,7 +96,22 @@ module.exports = {
             template: './src/index.html',
         }),
         new MiniCssExtractPlugin({
+            chunkFilename: '[name].css',
             filename: '[name].css',
+            ignoreOrder: true,
         }),
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            maxInitialRequests: Infinity,
+            minSize: 0,
+        },
+        minimizer: [
+            new TerserPlugin({
+                extractComments: false,
+            }),
+            new CssMinimizerWebpackPlugin(),
+        ],
+    },
 };
