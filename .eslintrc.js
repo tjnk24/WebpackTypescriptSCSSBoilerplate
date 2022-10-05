@@ -97,17 +97,6 @@ module.exports = {
         },
     ],
     'no-multi-spaces': 'error',
-    'no-restricted-imports': [
-        'error',
-        {
-            'patterns': [
-                {
-                    'group': ['__pages/*'],
-                    'message': 'usage of import from __pages directory allowed only for appRoutes.ts, render.ts, static/client/index.tsx'
-                },
-            ]
-        }
-    ],
     'object-curly-newline': [
         'error',
         {
