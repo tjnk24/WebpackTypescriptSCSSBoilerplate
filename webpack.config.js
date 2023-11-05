@@ -13,7 +13,6 @@ module.exports = {
     devtool: development && 'source-map',
     devServer: {
         static: path.resolve(__dirname, 'src'),
-        liveReload: false,
         open: true,
         port: 8081,
         hot: true,
@@ -51,19 +50,19 @@ module.exports = {
             {
                 test:/\.scss$/,
                 use: [
-                    {loader: development ? 'style-loader' : MiniCssExtractPlugin.loader},
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader',
                     {
                         loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
                                 plugins: [
-                                    'postcss-preset-env',
+                                    ['postcss-preset-env'],
                                 ],
                             },
                         },
                     },
+                    'sass-loader',
                 ],
             },
             {
