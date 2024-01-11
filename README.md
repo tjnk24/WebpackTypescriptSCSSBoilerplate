@@ -1,4 +1,4 @@
-# WebpackTypescriptSCSSBoilerplate
+# webpack-typescript-scss-boilerplate
 Boilerplate with Webpack, TS, SCSS ready
 
 - Webpack
