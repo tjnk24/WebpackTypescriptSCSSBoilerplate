@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "webpack-typescript-scss-boilerplate",
   "main": "src/index.js",
-  "repository": "https://github.com/tjnk24/WebpackTypescriptBoilerplate.git",
+  "repository": "https://github.com/tjnk24/webpack-typescript-scss-boilerplate.git",
   "author": "tjnk24 <tjnk24@gmail.com>",
   "license": "MIT",
   "private": false,
